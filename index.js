@@ -101,11 +101,12 @@ function saveTodoToLocalStorage(todoVal) {
 }
 
 function getTodos() {
-  if (localStorage.getItem("todos") === null) {
-    todos = [];
-  } else {
-    todos = JSON.parse(localStorage.getItem("todos"));
-  }
+  //   if (localStorage.getItem("todos") === null) {
+  //     todos = [];
+  //   } else {
+  //     todos = JSON.parse(localStorage.getItem("todos"));
+  //   }
+  let todos = checkLocalStore();
 
   todos.forEach(function (todo) {
     //todo Div
@@ -134,13 +135,25 @@ function getTodos() {
 }
 
 function removelocalTodos(todo) {
+  //   let todos;
+  //   if (localStorage.getItem("todos") === null) {
+  //     todos = [];
+  //   } else {
+  //     todos = JSON.parse(localStorage.getItem("todos"));
+  //   }
+  let todos = checkLocalStore();
+  const todoIndex = todo.children[0].innerText;
+  todos.splice(todos.indexOf(todoIndex), 1);
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+function checkLocalStore() {
   let todos;
   if (localStorage.getItem("todos") === null) {
     todos = [];
   } else {
     todos = JSON.parse(localStorage.getItem("todos"));
   }
-  const todoIndex = todo.children[0].innerText;
-  todos.splice(todos.indexOf(todoIndex), 1);
-  localStorage.setItem("todos", JSON.stringify(todos));
+
+  return todos;
 }
