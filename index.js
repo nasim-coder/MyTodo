@@ -5,7 +5,7 @@ const todoList = document.querySelector(".todo-list");
 const filterOption = document.querySelector(".filter-todo");
 
 //Event Listeners
-document.addEventListener("DOMContentLoaded", getTodos);
+document.addEventListener("DOMContentLoaded", afterDocumentLoaded());
 todoButton.addEventListener("click", addTodo);
 todoList.addEventListener("click", deleteCheck);
 filterOption.addEventListener("click", filterTodo);
@@ -89,25 +89,19 @@ function filterTodo(event) {
 
 function saveTodoToLocalStorage(todoVal) {
   //check if value already there in local store
-  let todos;
-  if (localStorage.getItem("todos") == null) {
-    todos = [];
-  } else {
-    todos = JSON.parse(localStorage.getItem("todos"));
-  }
-
-  todos.push(todoVal);
-  localStorage.setItem("todos", JSON.stringify(todos));
-}
-
-function getTodos() {
-  //   if (localStorage.getItem("todos") === null) {
+  //   let todos;
+  //   if (localStorage.getItem("todos") == null) {
   //     todos = [];
   //   } else {
   //     todos = JSON.parse(localStorage.getItem("todos"));
   //   }
   let todos = checkLocalStore();
+  todos.push(todoVal);
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
 
+function getTodos() {
+  let todos = checkLocalStore();
   todos.forEach(function (todo) {
     //todo Div
     const todoDiv = document.createElement("div");
@@ -135,18 +129,13 @@ function getTodos() {
 }
 
 function removelocalTodos(todo) {
-  //   let todos;
-  //   if (localStorage.getItem("todos") === null) {
-  //     todos = [];
-  //   } else {
-  //     todos = JSON.parse(localStorage.getItem("todos"));
-  //   }
   let todos = checkLocalStore();
   const todoIndex = todo.children[0].innerText;
   todos.splice(todos.indexOf(todoIndex), 1);
   localStorage.setItem("todos", JSON.stringify(todos));
 }
 
+//check if data is already present
 function checkLocalStore() {
   let todos;
   if (localStorage.getItem("todos") === null) {
@@ -156,4 +145,28 @@ function checkLocalStore() {
   }
 
   return todos;
+}
+
+function afterDocumentLoaded() {
+  saveName();
+  getTodos();
+}
+
+function saveName() {
+  if (!localStorage.getItem("name")) {
+    localStorage.setItem("name", myPrompt());
+  }
+  let name = localStorage.getItem("name");
+  console.log("name is " + name);
+}
+
+function myPrompt() {
+  let person = prompt("Please enter your name :");
+  let name;
+  if (person == null || person == "") {
+    name = "";
+  } else {
+    name = person;
+  }
+  return name;
 }
