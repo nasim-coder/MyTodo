@@ -152,14 +152,18 @@ function afterDocumentLoaded() {
   getTodos();
 }
 
+//save name to localStorage
 function saveName() {
   if (!localStorage.getItem("name")) {
     localStorage.setItem("name", myPrompt());
   }
   let name = localStorage.getItem("name");
+  let nameElement = document.querySelector(".myName");
+  nameElement.innerHTML = name + "'s";
   console.log("name is " + name);
 }
 
+//function to take valuefrom the user
 function myPrompt() {
   let person = prompt("Please enter your name :");
   let name;

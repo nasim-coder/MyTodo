@@ -93,7 +93,7 @@ form button:hover {
   opacity: 0.5;
 }
 .fall {
-  transform: translateY(8rem) rotateZ(20deg);
+  transform: translateY(5rem) rotateZ(30deg);
   opacity: 0;
 }
 
@@ -131,4 +131,8 @@ select {
 .select:hover::after {
   background: #c20f62e7;
   color: white;
+}
+
+.myName {
+  color: #c20f62e7;
 }
